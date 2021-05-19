@@ -1,0 +1,44 @@
+.page-nav {
+    padding: 10px;
+    background-color: #ccc;
+    margin-bottom: 30px;
+}
+.nav-register,
+.nav-login,
+.nav-username {
+    margin: 0 10px;
+}
+.page-title {
+    font-size: 20px;
+}
+.article-box {
+    border-bottom: 1px solid #eee;
+    padding: 0 10px;
+}
+*{  
+    margin: 0px;  
+    padding: 0px;  
+}  
+video{  
+    position: fixed;  
+    right: 0px;  
+    bottom: 0px;  
+    min-width: 100%;  
+    min-height: 100%;  
+    height: auto;  
+    width: auto;  
+    filter: blur(10px);
+    z-index:-11
+}  
+source{  
+    min-width: 100%;  
+    min-height: 100%;  
+    height: auto;  
+    width: auto;  
+} 
+body{
+    color: black;
+    font-family: "华文细黑";
+    background:url("2.jpg") no-repeat;
+    background-size: 100%;
+}
