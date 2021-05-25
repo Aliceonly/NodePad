@@ -1,20 +1,31 @@
 <%- include header %>
-        <div class="container">
+		<div class="container">
+			<div class="input-group col-md-3" style="margin-top:0px;positon:relative;">
+				<form method="post">
+				<input type="text" class="form-control" type="text" class="form-control input-content" id="codeType" required="required" name="condition" placeholder="请输入文章标题"/>
+					 <span class="input-group-btn">
+						<button class="btn btn-info btn-search" type="submit">查找</button>
+						<a class="glyphicon glyphicon-remove btn form-control-feedback input-clear-a"
+                                           style="pointer-events: auto;"
+                                           onclick="$('#codeType').val('')"></a>
+					 </span>
+				</form>
+		  	</div>
             <div class="row">
                 <% arts.forEach(function(art) { %>
                 	<div class="col-xs-8 col-xs-offset-2">
                 	    <div class="article-box">
-                    		<a href="/detail/<%= art._id %>">
-                    			<h3 class="text-center"><%= art.title %></h3>
+                    		<a style="text-decoration: none;" href="/detail/<%= art._id %>">
+                    			<h3 style="font-size: 40px;color: bisque;" class="text-center"><%= art.title %></h3>
                     		</a>
                     		<p class="text-center">
                     		    <span class="label label-info"><%= art.tag %></span> | 
-                    			<span class="create-time">
+                    			<span style="font-size: 15px;color: lightyellow;" class="create-time">
                     				<span class="text-bold">时间:</span>
                     				<%= moment(art.createTime).locale('zh-cn').format('LL HH:mm:ss') %>
                     			</span>
                     		</p>
-                    		<p><%= art.content %></p>
+                    		<p style="color: aliceblue;"><%= art.content %></p>
                 		</div>
                 	</div>
                 <% }); %>

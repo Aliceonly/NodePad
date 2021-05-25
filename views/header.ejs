@@ -12,18 +12,17 @@
     <video autoplay loop muted>
         <source src="1.mp4" type="video/mp4"/>
     </video>
-    <div class="clearfix page-nav">
+    <div class="clearfix page-nav" style="font-size: larger;font-weight: bolder;">
     <% if(user) { %>
-        <div class="pull-left nav-username">欢迎! <a href="/"><%= user.username %></a></div>
-        <div class="pull-left"><a href="/post">发表</a></div>
-        <div class="pull-right nav-quit"><a href="/quit">退出登录</a></div>
+        <div class="pull-left nav-username">欢迎! <a style="text-decoration: none;" href="/"><%= user.username %></a></div>
+        <div class="pull-left"><a style="text-decoration: none;" href="/post">发表</a></div>
+        <div class="pull-right nav-quit"><a style="text-decoration: none;" href="/quit">退出登录</a></div>
     <% } else { %>
         <% if(page == 'login') { %>
-            <div class="pull-right nav-register"><a href="/reg">注册</a></div>
+            <div class="pull-right nav-register"><a style="text-decoration: none;" href="/reg">注册</a></div>
         <% } else { %>
-            <div class="pull-right nav-login"><a href="/login">登录</a></div>
+            <div class="pull-right nav-login"><a style="text-decoration: none;" href="/login">登录</a></div>
         <% } %>
     <% } %>
-        
     </div>
-    <div class="text-center page-title"><%= title %></div>
+    <div  class="text-center page-title" style="padding-bottom: 30px;font-size: 60px;color: aliceblue;font-weight: bolder;"><%= title %></div>

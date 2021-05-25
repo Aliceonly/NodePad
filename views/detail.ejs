@@ -3,7 +3,7 @@
             <div class="row">
             	<div class="col-xs-8 col-xs-offset-2">
             	    <div class="article-box">
-                			<p class="text-center"><%= art.title %></p>
+                			<p class="text-center" style="padding-top: 30px;font-size: large;font-weight: bolder;"><%= art.title %></p>
                 		<p class="text-center">
                 		    <span class="label label-info"><%= art.tag %></span> | 
                 			<span class="create-time">
@@ -12,6 +12,8 @@
                 			</span>
                 		</p>
                 		<p><%= art.content %></p>
+						<a href="/edit/<%= art._id %>" role="button" class="btn btn-primary">修改</a>
+						<a href="/del/<%= art._id %>" role="button" class="btn btn-warning">删除</a>
             		</div>
             	</div>
             </div>

@@ -26,7 +26,6 @@ app.set('view engine', 'ejs');
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
-
 app.use(session({
     key: 'session',
     secret: 'Keboard cat',
@@ -55,6 +54,23 @@ app.get('/', function(req, res) {
             });        
         })
 });
+
+app.post('/',function(req,res){
+    var conditions = req.body.condition;
+    Note.find({title:conditions})
+        .exec(function(err, arts) {
+            if(err) {
+                console.log(err);
+                return res.redirect('/');
+            }
+            res.render('index', {
+                title: '笔记列表',
+                user: req.session.user,
+                arts: arts,
+                moment: moment
+            });
+        })
+    });
 
 app.get('/reg', function(req, res) {
     res.render('register', {
@@ -142,12 +158,6 @@ app.post('/login', function(req, res) {
 	});
 });
 
-app.get('/quit', function(req, res) {
-    req.session.user = null;
-    console.log('退出登录成功！');
-    return res.redirect('/login');
-});
-
 app.get('/post', function(req, res) {
     res.render('post', {
         title: '发布',
@@ -191,7 +201,90 @@ app.get('/detail/:_id', function(req, res) {
         });
 });
 
+app.get('/del/:_id', function (req, res,next) {
+    Note.remove({_id:req.params._id},function(err) {
+        if(err) {
+            console.log(err);
+            return res.redirect('/');
+        }else {
+            console.log('文章删除成功！');
+            return res.redirect('/');}
+        })
+});
+
+app.get('/edit/:_id', function(req, res, next) {
+	Note.findOne({_id: req.params._id}, function(err, art) {
+		if(err) {
+			console.log(err);
+			return res.redirect('/');
+		}
+		res.render('edit', {
+			title: '修改笔记',
+			user: req.session.user,
+			moment: moment,
+			art: art
+		});
+	});
+});
+
+app.post('/edit/:_id', function(req, res, next) {
+	Note.update({_id: req.params._id},{
+		title: req.body.title,
+		tag: req.body.tag,
+		content: req.body.content
+	}, function(err, doc) {
+		if(err) {
+			return res.redirect('/');
+		}
+		console.log('笔记编辑成功！');
+		return res.redirect('/');
+	});
+});
+
+app.get('/quit', function(req, res) {
+    req.session.user = null;
+    console.log('退出登录成功！');
+    return res.redirect('/login');
+});
+
+// app.get('/adminlogin', function(req, res) {
+// 	User.find(function(err) {
+// 	res.render('login', {
+// 		title: '登录为管理员',
+// 		user: req.session.user,
+// 		page:login
+// 		});
+// 	});
+// });
+
+// app.post('/adminlogin', function(req, res) {
+// 	var adminusername = req.body.username,
+// 		adminpassword = req.body.password;
+// 		if(adminusername !== 'kanya') {
+// 			req.flash('error', '该管理员不存在！');
+// 			return res.redirect('/adminlogin');
+// 		}
+// 		if(adminpassword !== 'kanya') {
+// 			req.flash('error', '密码错误！');
+// 			return res.redirect('/adminlogin');
+// 		}
+// 		req.flash('success', '登录成功！');
+// 		return res.redirect('/admin');
+// 	});
+
+// app.get('/admin', function(req, res) {
+// 	User.find(function(err, doc) {
+// 	res.render('admin', {
+// 		title: '账户信息管理',
+// 		user: req.session.user,
+// 		datas: doc
+// 		});
+// 	});
+// });
+
 app.listen(3000, function(req, res) {
     console.log(app.get('views'));
-    console.log('页面正在localhost:3000运行');
+    console.log('项目:在线笔记本');
+    console.log('作者:陈骏杰.');
+    console.log('请在localhost:3000访问页面.');
 });
