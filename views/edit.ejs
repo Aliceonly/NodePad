@@ -1,22 +1,16 @@
 <%- include header %>
-        <div class="container">
-            <div class="row">
-                <div class="col-xs-4 col-xs-offset-4">
-                <form method="post">
-                    <div class="form-group">
-                        <input type="text" class="form-control" name="title" placeholder="标题" value="<%= art.title %>">
-                    </div>
+<form method="post">
 
-                    <div class="form-group">
-                        <input type="text" class="form-control" name="tag" placeholder="标签" value="<%= art.tag %>">
-                    </div>
+	<div class="form-group">
+		<input type="text" class="form-control" name="title" placeholder="标题" value="<%= art.title %>">
+	</div>
 
-                    <textarea class="form-control" name="content" placeholder="文章内容"><%= art.content %></textarea>
+	<div class="form-group">
+		<input type="text" class="form-control" name="tag" placeholder="标签" value="<%= art.tag %>">
+	</div>
 
-                    <button type="submit" class="btn btn-default">保存</button>
-                </form>
-                </div>
-            </div>
-        </div>
-    </body>
-</html>
+	<textarea class="form-control" name="content" placeholder="文章内容"><%= art.content %></textarea>
+
+	<button type="submit" class="btn btn-default">保存</button>
+</form>
+<%- include footer %>
