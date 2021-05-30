@@ -78,7 +78,7 @@ router.get('/', function(req, res, next) {
 router.get('/reg', checkIsLogin.login);
 router.get('/reg', function(req, res, next) {
 	res.render('register', { 
-		title: '注册',
+		title: '注册为创作者',
 		user: req.session.user,
 		success: req.flash('success').toString(),
 		error: req.flash('error').toString()
@@ -139,7 +139,7 @@ router.get('/login', checkIsLogin.login);
 router.get('/login', function(req, res, next) {
 	User.find(function(err, doc) {
 		res.render('login', {
-			title: '登录',
+			title: '登录为创作者',
 			user: req.session.user,
 			success: req.flash('success').toString(),
 			error: req.flash('error').toString(),
