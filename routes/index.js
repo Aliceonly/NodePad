@@ -3,7 +3,6 @@ var mongoose = require('mongoose');
 //引入加密模块
 var crypto = require('crypto');
 var moment = require('moment');
-let url = require('url');
 
 var model = require('../models/model');
 var checkIsLogin = require('./checkIsLogin');
@@ -28,7 +27,6 @@ var newAdmin = new Admin({
 newAdmin.save();
 
 router.get('/', function(req, res, next) {
-	url = url.parse(req.url, true);
 	//上下页分页功能
 	page = req.query.page ? parseInt(req.query.page) //parseInt()解析一个字符串，并返回一个整数
 	: 1 ;//判断req.query.page是否为当前页,若page未指定则返回page=1
@@ -358,6 +356,16 @@ router.get('/remove/:_id', function(req, res, next) {
 	})
 });
 
+router.get('/adminremove/:_id', function(req, res, next) {
+	User.remove({_id: req.params._id}, function(err) {
+		if(err) {
+			req.flash('error', err);
+		} else {
+			req.flash('success', '笔记删除成功！');
+		}
+		return res.redirect('back');
+	})
+});
 
 router.get('/review', function(req, res) {
 	User.find(function(err, doc) {
@@ -370,7 +378,6 @@ router.get('/review', function(req, res) {
 		});
 	});
 });
-
 
 router.get('/reviewer', function(req, res, next) {
 	User.find(function(err, doc) {

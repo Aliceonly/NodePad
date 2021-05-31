@@ -58,16 +58,22 @@
 			</div>
 		</nav>
 		<div id="container">
-			<div class="alert-box">
+			<div class="alert-box" style="padding-top: 35px;font-size: 14px;">
 				<% if(success) { %>
-					<div class="alert alert-success" role="alert">
-						<%= success %>
+					<div class="alert alert-success alert-dismissable fade in" role="alert">
+						<a href="#" class="close" data-dismiss="alert">
+							&times;
+						</a>
+						<strong><%= success %></strong>
 					</div>
 				<% } %>
 
 				<% if(error) { %>
-					<div class="alert alert-danger" role="alert">
-						<%= error %>
+					<div class="alert alert-danger alert-dismissable fade in" role="alert">
+						<a href="#" class="close" data-dismiss="alert">
+							&times;
+						</a>
+						<strong><%= error %></strong>
 					</div>
 				<% } %>
 			</div>

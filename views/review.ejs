@@ -1,8 +1,16 @@
 <%- include header %>
-<ul>
-	<% datas.forEach(function(datas) { %>
-		<li>用户名:<%= datas.username %></li>
-		<li>邮箱:<%= datas.email %></li>
-	<% }); %>
-</ul>
+<% datas.forEach(function(datas) { %>
+	<div class="row" style="padding-top: 50px;">
+		<div class="col-xs-8 col-xs-offset-2">
+			<div class="article-box">
+				<ul>
+						<li>用户名:<%= datas.username %></li>
+						<li>邮箱:<%= datas.email %></li>
+				</ul>
+				<a role="button" class="btn btn-primary">修改</a>
+				<a role="button" class="btn btn-warning">删除</a>
+			</div>
+		</div>
+	</div>
+<% }); %>
 <%- include footer %>
