@@ -83,6 +83,7 @@ router.get('/reg', function(req, res, next) {
 	});
 });
 
+
 router.post('/reg', function(req, res, next) {
 	//req.body 处理 post 请求
 	var username = req.body.username,
@@ -133,6 +134,7 @@ router.post('/reg', function(req, res, next) {
 	});
 });
 
+
 router.get('/login', checkIsLogin.login);
 router.get('/login', function(req, res, next) {
 	User.find(function(err, doc) {
@@ -145,6 +147,7 @@ router.get('/login', function(req, res, next) {
 		});
 	});
 });
+
 
 router.post('/login', function(req, res, next) {
 	var username = req.body.username,
@@ -176,7 +179,7 @@ router.post('/login', function(req, res, next) {
 
 
 
-router.get('/u/:author', function(req, res, next) {
+router.get('/detail/:author', function(req, res, next) {
 	page = req.query.page ? parseInt(req.query.page) : 1;
 	Article
 	.count({author: req.params.author})
@@ -209,7 +212,7 @@ router.get('/u/:author', function(req, res, next) {
 });
 
 
-router.get('/u/:author/:_id', function(req, res, next) {
+router.get('/detail/:author/:_id', function(req, res, next) {
 	Article.findOne({
 		author: req.params.author,
 		_id: req.params._id
@@ -280,6 +283,7 @@ router.get('/search', function(req, res, next) {
 	});
 });
 
+
 router.get('/post', checkIsLogin.notLogin);
 router.get('/post', function(req, res, next) {
 	res.render('post', { 
@@ -289,6 +293,7 @@ router.get('/post', function(req, res, next) {
 		error: req.flash('error').toString()
 	});
 });
+
 
 router.post('/post', function(req, res, next) {
 	var data = new Article({
@@ -309,6 +314,7 @@ router.post('/post', function(req, res, next) {
 	});
 });
 
+
 router.get('/edit/:_id', function(req, res, next) {
 	Article.findOne({_id: req.params._id}, function(err, art) {
 		if(err) {
@@ -326,6 +332,7 @@ router.get('/edit/:_id', function(req, res, next) {
 	});
 });
 
+
 router.post('/edit/:_id', function(req, res, next) {
 	//mongoose 的 update() 方法,并返回修改结果
 	Article.update({_id: req.params._id},{
@@ -339,9 +346,10 @@ router.post('/edit/:_id', function(req, res, next) {
 			return res.redirect('back');
 		}
 		req.flash('success', '笔记编辑成功！');
-		return res.redirect('/u/' + req.session.user.username);
+		return res.redirect('/detail/' + req.session.user.username);
 	});
 });
+
 
 router.get('/remove/:_id', function(req, res, next) {
 	//mongoose 的 remove() 方法，通过传参直接删除检索结果
@@ -356,6 +364,7 @@ router.get('/remove/:_id', function(req, res, next) {
 	})
 });
 
+
 router.get('/adminremove/:_id', function(req, res, next) {
 	User.remove({_id: req.params._id}, function(err) {
 		if(err) {
@@ -366,6 +375,7 @@ router.get('/adminremove/:_id', function(req, res, next) {
 		return res.redirect('back');
 	})
 });
+
 
 router.get('/review', function(req, res) {
 	User.find(function(err, doc) {
@@ -379,6 +389,7 @@ router.get('/review', function(req, res) {
 	});
 });
 
+
 router.get('/reviewer', function(req, res, next) {
 	User.find(function(err, doc) {
 	res.render('login', {
@@ -390,6 +401,7 @@ router.get('/reviewer', function(req, res, next) {
 		});
 	});
 });
+
 
 router.post('/reviewer', function(req, res) {
 	var adminusername = req.body.username,
@@ -405,6 +417,7 @@ router.post('/reviewer', function(req, res) {
 		req.flash('success', '登录成功！');
 		return res.redirect('/review');
 	});
+
 
 router.get('/logout', function(req, res, next) {
 	req.session.user = null;
