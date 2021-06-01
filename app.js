@@ -11,7 +11,7 @@ var flash = require('connect-flash');
 var mongoose = require('mongoose');
 
 var routes = require('./routes/index');
-var users = require('./routes/users');
+// var users = require('./routes/users');
 
 var app = express();
 
@@ -48,7 +48,7 @@ app.use(flash());
 // error handlers
 
 app.use('/', routes);
-app.use('/users', users);
+// app.use('/users', users);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
