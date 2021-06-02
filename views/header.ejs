@@ -8,8 +8,26 @@
 		<link rel="stylesheet" href="/stylesheets/style.css">
 		<script src="/javascripts/jquery-1.11.3.min.js"></script>
 		<script src="/bootstrap/js/bootstrap.min.js"></script>
+		<script language="javascript"> 
+			function onkeydown() { 
+				if(event.keyCode == 13) { 
+					document.getElementsById("enter").click(); 
+					return false; 
+				}
+			} 
+		</script>
+		<script>
+			var i = 1;
+			function roll()
+			{
+				var obj = document.getElementById("my");
+				obj.value += i + "\n";
+				i++;
+				obj.scrollTop = obj.scrollHeight; // good
+			}
+			</script>
 	</head>
-	<body>
+	<body onLoad="document.getElementById('enter').focus()">
 		<nav class="navbar navbar-inverse navbar-fixed-top" style="height: 80px;">
 			<div class="container-fluid">
 				<div class="navbar-header" style="height: 50px;padding-top: 15px;">
@@ -50,7 +68,7 @@
 					</ul>
 					<form class="navbar-form navbar-right" role="search" action='/search' method="get">
 						<div class="form-group">
-							<input type="text" class="form-control" placeholder="请填写想要的笔记标题~" name="title">
+							<input type="text" class="form-control" required placeholder="请填写想要的笔记标题~" name="title">
 						</div>
 						<button type="submit" class="btn btn-default">找一找</button>
 					</form>

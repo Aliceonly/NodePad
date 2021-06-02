@@ -2,15 +2,15 @@
 <form method="post">
 
 	<div class="form-group">
-		<input type="text" class="form-control" name="title" placeholder="标题" value="<%= art.title %>">
+		<input autofocus type="text" required class="form-control" name="title" placeholder="标题" value="<%= art.title %>">
 	</div>
 
 	<div class="form-group">
-		<input type="text" class="form-control" name="tag" placeholder="标签" value="<%= art.tag %>">
+		<input type="text" class="form-control" required name="tag" placeholder="标签" value="<%= art.tag %>">
 	</div>
 
-	<textarea class="form-control" name="content" placeholder="文章内容"><%= art.content %></textarea>
+	<textarea class="form-control" cols="20" wrap="hard" maxlength="9999" style="height: 430px;resize: both;" name="content" required placeholder="文章内容"><%= art.content %></textarea>
 
-	<button type="submit" class="btn btn-default">保存</button>
+	<button id="enter" type="submit" style="outline: none;" class="btn btn-default">保存</button>
 </form>
 <%- include footer %>

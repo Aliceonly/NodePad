@@ -365,31 +365,6 @@ router.get('/remove/:_id', function(req, res, next) {
 });
 
 
-router.get('/adminremove/:_id', function(req, res, next) {
-	User.remove({_id: req.params._id}, function(err) {
-		if(err) {
-			req.flash('error', err);
-		} else {
-			req.flash('success', '笔记删除成功！');
-		}
-		return res.redirect('back');
-	})
-});
-
-
-router.get('/review', function(req, res) {
-	User.find(function(err, doc) {
-	res.render('review', {
-		title: '账户信息管理',
-		user: req.session.user,
-		success: req.flash('success').toString(),
-		error: req.flash('error').toString(),
-		datas: doc
-		});
-	});
-});
-
-
 router.get('/reviewer', function(req, res, next) {
 	User.find(function(err, doc) {
 	res.render('login', {
@@ -403,7 +378,7 @@ router.get('/reviewer', function(req, res, next) {
 });
 
 
-router.post('/reviewer', function(req, res) {
+router.post('/reviewer', function(req, res, next) {
 	var adminusername = req.body.username,
 		adminpassword = req.body.password;
 		if(adminusername !== 'kanya') {
@@ -414,9 +389,71 @@ router.post('/reviewer', function(req, res) {
 			req.flash('error', '密码错误！');
 			return res.redirect('/reviewer');
 		}
-		req.flash('success', '登录成功！');
+		req.session.username = 'kanya';
+		req.flash('success', '进入管理员界面成功！');
 		return res.redirect('/review');
 	});
+
+
+router.get('/review', checkIsLogin.notAdmin);
+router.get('/review', function(req, res) {
+	User.find(function(err, doc) {
+		if(err) {
+			req.flash('error' , err);
+			return res.redirect('back');
+		}
+		res.render('review', {
+			title: '账户信息管理',
+			user: req.session.user,
+			success: req.flash('success').toString(),
+			error: req.flash('error').toString(),
+			datas: doc
+			});
+	});
+});
+
+
+// router.get('/adminedit/:_id',function(req,res) {
+// 	User.findOne({_id: req.params._id}), function(err,doc){
+// 		if(err) {
+// 			req.flash('error' , err);
+// 			return res.redirect('back');
+// 		}
+// 		res.render('adedit', {
+// 			title: '更改用户信息',
+// 			success: req.flash('success').toString(),
+// 			error: req.flash('error').toString(),
+// 			datas: doc
+// 		});
+// 	}
+// });
+
+
+// router.post('/adminedit/:_id', function(req, res) {
+// 	User.update({_id: req.params._id},{
+// 		username: req.body.username,
+// 		email: req.body.email
+// 	}, function(err, doc) {
+// 		if(err) {
+// 			req.flash('error', err);
+// 			return res.redirect('back');
+// 		}
+// 		req.flash('success', '更改用户信息成功！');
+// 		return res.redirect('/review');
+// 	});
+// });
+
+
+router.get('/adminremove/:_id', function(req, res, next) {
+	User.remove({_id: req.params._id}, function(err) {
+		if(err) {
+			req.flash('error', err);
+		} else {
+			req.flash('success', '移除用户成功！');
+		}
+		return res.redirect('back');
+	})
+});
 
 
 router.get('/logout', function(req, res, next) {
