@@ -35,6 +35,7 @@ var articleSchema = new Schema({
 		type: Number,
 		default: 0
 	},
+	comment: String,
 	//发表时间
 	createTime: {
 		type: Date,
@@ -43,18 +44,25 @@ var articleSchema = new Schema({
 });
 
 // var commentSchema = new Schema({
-// 	_id: ObjectID, //评论ID
-// 	userID: ObjectID, //用户ID
-// 	username: String, //用户名 反常规化 增加数据文件的容量，但是连接User表查询，从而减少请求，提升速度。
-// 	articleID: ObjectID, //文章ID
-// 	parentID: ObjectID, //上级评论ID
-// 	text: String, //内容
-// 	//评论时间
+// 	text: String,
 // 	createTime: {
-// 		type: Date,
-// 		default: Date.now
+// 		 type: Date,
+// 		 default: Date.now 
 // 	}
+// 	posts: {type: Schema.Types.ObjectId, ref: 'Article'}
+// 	// _id: ObjectID, //评论ID
+// 	// userID: ObjectID, //用户ID
+// 	// username: String, //用户名 反常规化 增加数据文件的容量，但是连接User表查询，从而减少请求，提升速度。
+// 	// articleID: ObjectID, //文章ID
+// 	// parentID: ObjectID, //上级评论ID
+// 	// text: String, //内容
+// 	// //评论时间
+// 	// createTime: {
+// 	// 	type: Date,
+// 	// 	default: Date.now
+// 	// }
 // });
+
 
 
 exports.User = mongoose.model('User', userSchema);

@@ -7,6 +7,7 @@ var moment = require('moment');
 var model = require('../models/model');
 var checkIsLogin = require('./checkIsLogin');
 const { title } = require('process');
+const { response } = require('express');
 
 //引入数据模型对象
 var User = model.User;
@@ -212,6 +213,37 @@ router.get('/detail/:author', function(req, res, next) {
 });
 
 
+router.get('/post', checkIsLogin.notLogin);
+router.get('/post', function(req, res, next) {
+	res.render('post', { 
+		title: '发表',
+		user: req.session.user,
+		success: req.flash('success').toString(),
+		error: req.flash('error').toString()
+	});
+});
+
+
+router.post('/post', function(req, res, next) {
+	var data = new Article({
+		title: req.body.title,
+		//通过 session 获得 author 元素
+		author: req.session.user.username,
+		tag: req.body.tag,
+		content: req.body.content
+	});
+
+	data.save(function(err, doc) {
+		if(err) {
+			req.flash('error', err);
+			return res.redirect('/post');
+		}
+		req.flash('success', '笔记发表成功！')
+		return res.redirect('/');
+	});
+});
+
+
 router.get('/detail/:author/:_id', function(req, res, next) {
 	Article.findOne({
 		author: req.params.author,
@@ -243,6 +275,42 @@ router.get('/detail/:author/:_id', function(req, res, next) {
 			});
 		});
 });
+
+
+router.post('/detail/:author/:_id', function(req, res) {
+	var commentData = req.body.comments;
+	Article.update({_id: req.params._id},{
+	comment: req.body.comments
+	}, function(err, comment) {
+		if(err) {
+			req.flash('error', err);
+			return res.redirect('back');
+		}
+	req.flash('success', '评论成功！');
+	req.session.comment = commentData;
+	return res.redirect('/detail/' + req.params.author + '/' + req.params._id);
+	});
+});
+
+
+router.post('/edit/:_id', function(req, res, next) {
+	//mongoose 的 update() 方法,并返回修改结果
+	Article.update({_id: req.params._id},{
+		title: req.body.title,
+		tag: req.body.tag,
+		content: req.body.content,
+		createTime: Date.now()
+	}, function(err, art) {
+		if(err) {
+			req.flash('error', err);
+			return res.redirect('back');
+		}
+		req.flash('success', '笔记编辑成功！');
+		return res.redirect('/detail/' + req.session.user.username);
+	});
+});
+
+
 
 
 router.get('/search', function(req, res, next) {
@@ -283,36 +351,6 @@ router.get('/search', function(req, res, next) {
 	});
 });
 
-
-router.get('/post', checkIsLogin.notLogin);
-router.get('/post', function(req, res, next) {
-	res.render('post', { 
-		title: '发表',
-		user: req.session.user,
-		success: req.flash('success').toString(),
-		error: req.flash('error').toString()
-	});
-});
-
-
-router.post('/post', function(req, res, next) {
-	var data = new Article({
-		title: req.body.title,
-		//通过 session 获得 author 元素
-		author: req.session.user.username,
-		tag: req.body.tag,
-		content: req.body.content
-	});
-
-	data.save(function(err, doc) {
-		if(err) {
-			req.flash('error', err);
-			return res.redirect('/post');
-		}
-		req.flash('success', '笔记发表成功！')
-		return res.redirect('/');
-	});
-});
 
 
 router.get('/edit/:_id', function(req, res, next) {

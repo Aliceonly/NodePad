@@ -1,0 +1,18 @@
+<%- include article %>
+	<div class="article">
+		<p>
+			<span>
+				<h1>匿名评论</h1>
+			</span>|
+			<span class="create-time">
+				<span class="text-bold">评论时间:</span>
+				<%= moment(art.commentsTime).format('LL HH:mm:ss') %>
+			</span>
+		</p>
+		<p></p>
+		<p></p>
+		<p><%= art.comments %></p>
+	</div>
+<% }); %>
+
+<%- include footer %>
