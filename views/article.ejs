@@ -5,15 +5,15 @@
 	</a>
 	<p>
 		<span class="author">
-			<span class="text-bold">发布者:</span>
+			<span class="text-bold">Author:</span>
 			<a href="/detail/<%= art.author %>"><%= art.author %></a>
 		</span>|
 		<span class="create-time">
-			<span class="text-bold">时间:</span>
+			<span class="text-bold">PostTime:</span>
 			<%= moment(art.createTime).format('LL HH:mm:ss') %>
 		</span>|
 		<span class="pv">
-			<span class="text-bold">浏览:</span>
+			<span class="text-bold">view:</span>
 			<%= art.pv %>
 		</span>|
 		<span class="tag"><%= art.tag %></span>
@@ -30,16 +30,18 @@
 	<div class="article">
 		<p>
 			<span class="pv">
-				<span style="font-size: larger;font-weight: bolder;">匿名评论</span>
+				<span style="font-size: larger;font-weight: bolder;">匿名评论板</span>
 			</span>|
-			<span class="create-time">
-				<span class="text-bold">评论时间:</span>
-				<%= moment(art.commentsTime).format('LL HH:mm:ss') %>
-			</span>
+			<span style="font-size: larger;" class="text-bold">最新评论</span>
 		</p>
-		<p></p>
-		<p></p>
 		<p><%= art.comment %></p>
+		<span style="float: right;" class="create-time">
+			<span class="text-bold">Comment'Time:</span>
+			<%= moment(art.commentsTime).format('LL HH:mm:ss') %>
+		</span>
+		<br/>
+		<p></p>
+		<p></p>
 	</div>
 <% } else { %>
 		<p style="padding: 90px 0 30px 0;color: grey;"> 还没有评论 快来评论吧 ! </p>
